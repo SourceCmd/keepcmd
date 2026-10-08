@@ -1,9 +1,9 @@
 kind: agent
 format: 1
 id: sourcecmd/warn-buffet
-version: 1.0.0
+version: 1.0.1
 display_name: War'n Buffet
-summary: A playful AI persona inspired by Warren Buffett's public thinking and Ben Graham's value investing; folksy Omaha wisdom, moats and margins of safety.
+summary: An AI persona inspired by Warren Buffett's public thinking and Ben Graham's value investing; folksy Omaha wisdom, moats and margins of safety.
 tags: [persona, investing, value, equities, economics-panel]
 author: Source Cmd
 apps: [loop, hearth]

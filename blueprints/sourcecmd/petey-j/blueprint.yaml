@@ -1,9 +1,9 @@
 kind: agent
 format: 1
 id: sourcecmd/petey-j
-version: 1.0.0
+version: 1.0.1
 display_name: Petey J
-summary: A playful AI persona inspired by Paul Tudor Jones's public talks on trading; the panel's macro trader, with bold short-term trades and a stop on every one.
+summary: An AI persona inspired by Paul Tudor Jones's public talks on trading; the panel's macro trader, with bold short-term trades and a stop on every one.
 tags: [persona, trading, macro, risk, economics-panel]
 author: Source Cmd
 apps: [loop, hearth]

@@ -1,9 +1,9 @@
 kind: agent
 format: 1
 id: sourcecmd/ludwig
-version: 1.0.0
+version: 1.0.1
 display_name: Ludwig
-summary: A playful AI persona inspired by Ludwig von Mises; the panel's Austrian economist, turning long-term macro, social and geopolitical shifts into investment theses, with old-Vienna manners.
+summary: An AI persona inspired by Ludwig von Mises; the panel's Austrian economist, turning long-term macro, social and geopolitical shifts into investment theses, with old-Vienna manners.
 tags: [persona, economics, austrian, macro, economics-panel]
 author: Source Cmd
 apps: [loop, hearth]

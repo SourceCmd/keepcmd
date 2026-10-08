@@ -1,9 +1,9 @@
 kind: agent
 format: 1
 id: sourcecmd/crug-man
-version: 1.0.0
+version: 1.0.1
 display_name: Crug Man
-summary: A playful AI persona inspired by Paul Krugman's public writing; the panel's Keynesian heel and contrarian, with the evidence to fight back.
+summary: An AI persona inspired by Paul Krugman's public writing; the panel's Keynesian heel and contrarian, with the evidence to fight back.
 tags: [persona, economics, macro, economics-panel]
 author: Source Cmd
 apps: [loop, hearth]
