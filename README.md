@@ -5,4 +5,4 @@ yours into a keep for Loop Cmd and Hearth Cmd, published at
 https://keepcmd.com. Binaries only; the source isn't public.
 
 - `releases/`: the signed release feed (`latest.json`) and binaries.
-- `blueprints/`: the signed blueprint catalog index (coming).
+- `blueprints/`: the signed blueprints catalog (`index.json`, `index.json.sig`, `catalog.tar.gz`), built from [SourceCmd/blueprints](https://github.com/SourceCmd/blueprints).

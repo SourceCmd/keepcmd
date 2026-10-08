@@ -1,0 +1,157 @@
+{
+  "blueprints": {
+    "sourcecmd/crug-man": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "Crug Man",
+      "files": {
+        "blueprint.yaml": "9979c0d4f47bd758e6f43d4a2c1f6b5c8a1544a744c295a953e9f595567b76e8"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "A playful AI persona inspired by Paul Krugman's public writing; the panel's Keynesian heel and contrarian, with the evidence to fight back.",
+      "tags": [
+        "persona",
+        "economics",
+        "macro",
+        "economics-panel"
+      ],
+      "version": "1.0.0"
+    },
+    "sourcecmd/dolly-o": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "Dolly O",
+      "files": {
+        "blueprint.yaml": "d3d7cc84037db935f8bd0e47f1c41d775e7a4423c238774c34e216220ff67e72"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "A playful AI persona inspired by Ray Dalio's public thinking; the panel's macro long-short advisor, with bold calls built on debt cycles and principles.",
+      "tags": [
+        "persona",
+        "investing",
+        "macro",
+        "economics-panel"
+      ],
+      "version": "1.0.0"
+    },
+    "sourcecmd/ludwig": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "Ludwig",
+      "files": {
+        "blueprint.yaml": "ba6319a38c2dfb3af3953d45f320c945e5c88ca3eb507a0b8697e5a53193f8df"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "A playful AI persona inspired by Ludwig von Mises; the panel's Austrian economist, turning long-term macro, social and geopolitical shifts into investment theses, with old-Vienna manners.",
+      "tags": [
+        "persona",
+        "economics",
+        "austrian",
+        "macro",
+        "economics-panel"
+      ],
+      "version": "1.0.0"
+    },
+    "sourcecmd/petey-j": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "Petey J",
+      "files": {
+        "blueprint.yaml": "a870ff4e080a279bcdb7d3410e08b06a603d6356e4d1cc08af4e404b2889274d"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "A playful AI persona inspired by Paul Tudor Jones's public talks on trading; the panel's macro trader, with bold short-term trades and a stop on every one.",
+      "tags": [
+        "persona",
+        "trading",
+        "macro",
+        "risk",
+        "economics-panel"
+      ],
+      "version": "1.0.0"
+    },
+    "sourcecmd/rare-earths-guy": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "Rare Earths Guy",
+      "files": {
+        "blueprint.yaml": "9b9d32029d715caef1da3503dcd8d38cd01cd4535944ce6412d4f2e0cf3473e6"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "The panel's equity research analyst and workhorse, obsessed with rare earths, critical minerals and supply chains; researches, writes reports and builds spreadsheets.",
+      "tags": [
+        "character",
+        "investing",
+        "equities",
+        "research",
+        "economics-panel"
+      ],
+      "version": "1.0.0"
+    },
+    "sourcecmd/schott-calder": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "Schott Calder",
+      "files": {
+        "blueprint.yaml": "0aa818540c6b011d9085fa736675e6a4440fb88a114fc4bd1c4bf5867117dbe4"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "The panel's scorekeeper; an impartial, slightly smug referee who logs every prediction and investment call and reports how they turned out.",
+      "tags": [
+        "character",
+        "investing",
+        "scorekeeping",
+        "economics-panel"
+      ],
+      "version": "1.0.0"
+    },
+    "sourcecmd/warn-buffet": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "War'n Buffet",
+      "files": {
+        "blueprint.yaml": "bf2b962cd918b6cfb95f461109ef4cf7364c82349db44c43e3a6a727751834b2"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "A playful AI persona inspired by Warren Buffett's public thinking and Ben Graham's value investing; folksy Omaha wisdom, moats and margins of safety.",
+      "tags": [
+        "persona",
+        "investing",
+        "value",
+        "equities",
+        "economics-panel"
+      ],
+      "version": "1.0.0"
+    }
+  },
+  "catalog_version": "2026.10.08",
+  "schema": 1
+}
