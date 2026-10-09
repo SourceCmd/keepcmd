@@ -1,5 +1,25 @@
 {
   "blueprints": {
+    "sourcecmd/chief-of-staff": {
+      "apps": [
+        "loop",
+        "hearth"
+      ],
+      "display_name": "Chief of Staff",
+      "files": {
+        "blueprint.yaml": "0b0bc4ba00975b5b5101d75e2424e58a1128c46c5bc8a4197cf25bebcbb1ca96"
+      },
+      "format": 1,
+      "kind": "agent",
+      "min_keep_version": "0.9.0",
+      "summary": "Makes, sets up, adds and retires your agents when you or people in your chats ask, within the rights you give it; every step it lacks a right for asks you first.",
+      "tags": [
+        "agents",
+        "management",
+        "chief-of-staff"
+      ],
+      "version": "1.0.0"
+    },
     "sourcecmd/crug-man": {
       "apps": [
         "loop",
@@ -152,6 +172,6 @@
       "version": "1.0.1"
     }
   },
-  "catalog_version": "2026.10.08.1",
+  "catalog_version": "2026.10.08.2",
   "schema": 1
 }
