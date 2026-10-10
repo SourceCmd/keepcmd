@@ -204,8 +204,11 @@ if [ "$os" = linux ]; then
   say "     and, once, so it keeps running after you log out and starts at boot:"
   say "       sudo loginctl enable-linger $(id -un)"
   say "  3. If '$cmd hub network status' says agents can't be held to their"
-  say "     network proxies here (Ubuntu), the one root step:"
+  say "     network proxies here (Ubuntu), or that a firewall (ufw or firewalld)"
+  say "     may keep phones out, the one root step:"
   say "       sudo $dir/keepcmd hub network install"
+  say "     It also allows the keep's phone port through ufw or firewalld, from"
+  say "     your local network only."
 fi
 say "  Then pair your phone (Loop Cmd or Hearth Cmd):"
 say "       $cmd hub pair"
