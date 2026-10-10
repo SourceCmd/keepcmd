@@ -205,10 +205,15 @@ if [ "$os" = linux ]; then
   say "       sudo loginctl enable-linger $(id -un)"
   say "  3. If '$cmd hub network status' says agents can't be held to their"
   say "     network proxies here (Ubuntu), or that a firewall (ufw or firewalld)"
-  say "     may keep phones out, the one root step:"
+  say "     may keep Hearth Cmd or displays out, the one root step:"
   say "       sudo $dir/keepcmd hub network install"
-  say "     It also allows the keep's phone port through ufw or firewalld, from"
-  say "     your local network only."
+  say "     It also allows the keep's local port through ufw or firewalld, from"
+  say "     your local network only. Loop Cmd doesn't need it."
 fi
-say "  Then pair your phone (Loop Cmd or Hearth Cmd):"
+say "  Then pair your phone with Loop Cmd, through the relay (this machine"
+say "  needs to be online; the phone can be anywhere):"
 say "       $cmd hub pair"
+# --app takes any case; capitalised, since this script never spells the old
+# lowercase binary's name (tools/releasetool/install_test.go).
+say "  or with Hearth Cmd, on the same Wi-Fi:"
+say "       $cmd hub pair --app Hearth"
