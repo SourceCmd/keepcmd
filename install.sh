@@ -4,20 +4,23 @@
 #   curl -fsSL https://keepcmd.com/install.sh | sh
 #
 # It downloads the current release for this machine from the signed release
-# feed at https://keepcmd.com/releases, checks it, and installs it as
+# feed at https://get.keepcmd.com/releases, checks it, and installs it as
 # ~/.local/bin/keepcmd (or $KEEPCMD_INSTALL_DIR/keepcmd). Nothing else is
-# written, and nothing needs root.
+# written, and nothing needs root. The same script is served from
+# keepcmd.com (the website) and get.keepcmd.com (the feed and binaries);
+# either way it fetches from get.keepcmd.com (D-406).
 #
 # Settings (environment):
 #   KEEPCMD_INSTALL_DIR  where to put keepcmd (default ~/.local/bin)
-#   KEEPCMD_FEED         the feed (default https://keepcmd.com/releases);
+#   KEEPCMD_FEED         the feed (default https://get.keepcmd.com/releases);
 #                        for testing, file:///… or http://localhost:…
 #
 # How it decides to trust what it downloads (the trust chain):
 #
 #   1. latest.json is a release signed with Keep Cmd's offline release key
 #      (internal/release; the signed bytes carry each platform's binary
-#      name, size and SHA-256). It's fetched over HTTPS from keepcmd.com.
+#      name, size and SHA-256). It's fetched over HTTPS from
+#      get.keepcmd.com.
 #   2. If openssl can check Ed25519 signatures (OpenSSL 3 does; macOS's
 #      LibreSSL doesn't), this script checks latest.json's signature itself,
 #      against the release keys written below (KEEPCMD_TRUSTED_KEYS, the
@@ -32,8 +35,9 @@
 # What that proves: the binary is the one the release key signed, and it
 # trusts the same keys, so every later update (`keepcmd hub update`, the
 # daemon's own updates) is checked against them. What it can't prove: this
-# script, the feed and the binary all come from keepcmd.com, so a first
-# install trusts HTTPS and whoever controls keepcmd.com, as every
+# script comes from keepcmd.com (or get.keepcmd.com), and the feed and the
+# binary from get.keepcmd.com, so a first install trusts HTTPS and whoever
+# controls those two sites (one owner, two GitHub Pages repos), as every
 # curl-to-sh installer does. If openssl is present, step 2 holds even
 # against a swapped binary, as long as this script is the one you read.
 # To check by hand instead, download this file, read it, and run it.
@@ -41,7 +45,7 @@ set -eu
 
 KEEPCMD_TRUSTED_KEYS="ed25519:3e15ffd88009d15b243b06d19d02c2ec2b65e3b3d668dd9445e37c02ac73000c"
 
-feed=${KEEPCMD_FEED:-https://keepcmd.com/releases}
+feed=${KEEPCMD_FEED:-https://get.keepcmd.com/releases}
 feed=${feed%/}
 dir=${KEEPCMD_INSTALL_DIR:-${HOME:?HOME is not set}/.local/bin}
 
