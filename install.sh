@@ -15,26 +15,31 @@
 #   KEEPCMD_FEED         the feed (default https://get.keepcmd.com/releases);
 #                        for testing, file:///… or http://localhost:…
 #
-# How it decides to trust what it downloads (the trust chain):
+# How it decides to trust what it downloads (the trust chain, D-414):
 #
-#   1. latest.json is a release signed with Keep Cmd's offline release key
-#      (internal/release; the signed bytes carry each platform's binary
-#      name, size and SHA-256). It's fetched over HTTPS from
-#      get.keepcmd.com.
+#   1. delegations.json is signed by one of Keep Cmd's two offline root keys
+#      (written below as KEEPCMD_ROOT_KEYS, the same ones the binaries
+#      compile in: a test in the source keeps them equal). It names the
+#      release key, among others, and the window it's good for.
+#      latest.json is a release signed with that release key (the signed
+#      bytes carry each platform's binary name, size and SHA-256). Both are
+#      fetched over HTTPS from get.keepcmd.com. This script checks that the
+#      delegations come from a root and name latest.json's signer as a
+#      release key, not revoked.
 #   2. If openssl can check Ed25519 signatures (OpenSSL 3 does; macOS's
-#      LibreSSL doesn't), this script checks latest.json's signature itself,
-#      against the release keys written below (KEEPCMD_TRUSTED_KEYS, the
-#      same ones the binaries trust: a test in the source keeps them equal).
+#      LibreSSL doesn't), this script checks both signatures itself.
 #   3. The binary is downloaded and its SHA-256 and size checked against the
 #      signed release.
-#   4. The downloaded binary checks the release too, before it's installed:
-#      `keepcmd release verify` checks latest.json's signature against the
-#      release keys compiled into it, and its own hash against the signed
-#      entry. That's the check that always runs, with no tools beyond sh.
+#   4. The downloaded binary checks the whole chain too, before it's
+#      installed: `keepcmd release verify` checks the delegations against
+#      the roots compiled into it, latest.json against the release keys
+#      they trust now (windows and revocations included), and its own hash
+#      against the signed entry. That's the check that always runs, with no
+#      tools beyond sh.
 #
-# What that proves: the binary is the one the release key signed, and it
-# trusts the same keys, so every later update (`keepcmd hub update`, the
-# daemon's own updates) is checked against them. What it can't prove: this
+# What that proves: the binary is the one a delegated release key signed,
+# and it trusts the same roots, so every later update (`keepcmd hub
+# update`, the daemon's own updates) is checked against them. What it can't prove: this
 # script comes from keepcmd.com (or get.keepcmd.com), and the feed and the
 # binary from get.keepcmd.com, so a first install trusts HTTPS and whoever
 # controls those two sites (one owner, two GitHub Pages repos), as every
@@ -43,7 +48,7 @@
 # To check by hand instead, download this file, read it, and run it.
 set -eu
 
-KEEPCMD_TRUSTED_KEYS="ed25519:3e15ffd88009d15b243b06d19d02c2ec2b65e3b3d668dd9445e37c02ac73000c"
+KEEPCMD_ROOT_KEYS="ed25519:ff3b89aed0f0ede4f42cb0d6f498a3c82c07da9ccf8072255695ae421ff0cf05 ed25519:1fb91dfda6d50934aaca60618781901fa1779d5977378fae5716aec409553e6b"
 
 feed=${KEEPCMD_FEED:-https://get.keepcmd.com/releases}
 feed=${feed%/}
@@ -110,20 +115,41 @@ esac
 tmp=$(mktemp -d 2>/dev/null || mktemp -d -t keepcmd)
 trap 'rm -rf "$tmp"' EXIT INT TERM
 
-# 1. The signed release.
+# 1. The delegations, then the signed release.
+fetch "$feed/delegations.json" "$tmp/delegations.json" || fail "couldn't fetch $feed/delegations.json"
 fetch "$feed/latest.json" "$tmp/latest.json" || fail "couldn't fetch $feed/latest.json"
-flat=$(tr -d ' \n\r\t' <"$tmp/latest.json")
-field() { printf '%s' "$flat" | sed -n "s/.*\"$1\":\"\\([^\"]*\\)\".*/\\1/p"; }
-signer=$(field k)
-[ -n "$signer" ] || fail "latest.json isn't a signed release"
-field b | b64d >"$tmp/envelope" || fail "latest.json isn't a signed release"
-field s | b64d >"$tmp/sig" || fail "latest.json isn't a signed release"
+field() { tr -d ' \n\r\t' <"$tmp/$1.json" | sed -n "s/.*\"$2\":\"\\([^\"]*\\)\".*/\\1/p"; }
+# unpack <name>: its signer into $tmp/<name>.k, its envelope and signature
+# into $tmp/<name>.env and $tmp/<name>.sig.
+unpack() {
+  field "$1" k >"$tmp/$1.k"
+  [ -s "$tmp/$1.k" ] || fail "$1.json isn't a signed Keep Cmd file"
+  field "$1" b | b64d >"$tmp/$1.env" || fail "$1.json isn't a signed Keep Cmd file"
+  field "$1" s | b64d >"$tmp/$1.sig" || fail "$1.json isn't a signed Keep Cmd file"
+}
+unpack delegations
+unpack latest
+root=$(cat "$tmp/delegations.k")
+signer=$(cat "$tmp/latest.k")
+dels=$(tr -d '\n\r' <"$tmp/delegations.env")
 
 trusted=no
-for k in $KEEPCMD_TRUSTED_KEYS; do
-  if [ "$k" = "$signer" ]; then trusted=yes; fi
+for k in $KEEPCMD_ROOT_KEYS; do
+  if [ "$k" = "$root" ]; then trusted=yes; fi
 done
-[ "$trusted" = yes ] || fail "latest.json is signed by a key this installer doesn't trust ($signer)"
+[ "$trusted" = yes ] || fail "delegations.json is signed by a key this installer doesn't trust ($root)"
+case $dels in
+  *'"space":"keepcmd","kind":"delegations"'*) ;;
+  *) fail "delegations.json isn't Keep Cmd's delegations" ;;
+esac
+case $dels in
+  *"{\"role\":\"release\",\"key\":\"$signer\""*) ;;
+  *) fail "latest.json is signed by a key the delegations don't trust for releases ($signer)" ;;
+esac
+revoked=$(printf '%s' "$dels" | sed -n 's/.*"revoked":\[\([^]]*\)\].*/\1/p')
+case $revoked in
+  *"\"$signer\""*) fail "latest.json is signed by a revoked key ($signer): don't install this" ;;
+esac
 
 # 2. The signature, by this script, where openssl can.
 hex2bin() {
@@ -136,24 +162,32 @@ hex2bin() {
     h=$rest
   done
 }
-if command -v openssl >/dev/null 2>&1; then
-  pub=${signer#ed25519:}
+# check <name> <signer id>: the file's signature, where openssl can (it
+# says so with a 0 return; 1: openssl can't here).
+check() {
+  pub=${2#ed25519:}
   # An Ed25519 public key as DER: the SubjectPublicKeyInfo prefix, then the key.
-  hex2bin "302a300506032b6570032100$pub" >"$tmp/pub.der"
-  if openssl pkey -pubin -inform DER -in "$tmp/pub.der" -out "$tmp/pub.pem" >/dev/null 2>&1; then
-    openssl pkeyutl -verify -pubin -inkey "$tmp/pub.pem" -rawin -in "$tmp/envelope" -sigfile "$tmp/sig" >/dev/null 2>&1 ||
-      fail "latest.json's signature doesn't verify: don't install this"
-    say "Checked the release's signature."
-  fi
+  hex2bin "302a300506032b6570032100$pub" >"$tmp/$1.der"
+  openssl pkey -pubin -inform DER -in "$tmp/$1.der" -out "$tmp/$1.pem" >/dev/null 2>&1 || return 1
+  openssl pkeyutl -verify -pubin -inkey "$tmp/$1.pem" -rawin -in "$tmp/$1.env" -sigfile "$tmp/$1.sig" >/dev/null 2>&1 ||
+    fail "$1.json's signature doesn't verify: don't install this"
+}
+if command -v openssl >/dev/null 2>&1 && check delegations "$root"; then
+  check latest "$signer"
+  say "Checked the release's signature."
 fi
 
 # 3. This platform's binary, as the signed release lists it.
-env=$(tr -d '\n\r' <"$tmp/envelope")
+env=$(tr -d '\n\r' <"$tmp/latest.env")
 case $env in
   *'"space":"keepcmd","kind":"release"'*) ;;
   *) fail "latest.json isn't a Keep Cmd release" ;;
 esac
-version=$(printf '%s' "$env" | sed -n 's/.*"body":{"version":"\([0-9][0-9.]*\)".*/\1/p')
+# The manifest's format (internal/release ManifestFormat): a newer one means
+# this copy of the installer is older than the feed.
+format=$(printf '%s' "$env" | sed -n 's/.*"body":{"format":\([0-9][0-9]*\),.*/\1/p')
+[ "$format" = 1 ] || fail "the feed's release format (${format:-none}) is newer than this installer reads: fetch the installer again from https://keepcmd.com/install.sh"
+version=$(printf '%s' "$env" | sed -n 's/.*"body":{"format":[0-9]*,"version":"\([0-9][0-9.]*\)".*/\1/p')
 entry=$(printf '%s' "$env" | sed -n "s/.*\"$plat\":{\\([^}]*\\)}.*/\\1/p")
 [ -n "$version" ] || fail "latest.json has no version"
 [ -n "$entry" ] || fail "release $version has no build for $plat"
@@ -173,8 +207,8 @@ have=$(wc -c <"$tmp/keepcmd" | tr -d ' ')
 [ "$got" = "$want" ] && [ "$have" = "$size" ] || fail "the download doesn't match the signed release: don't install it"
 chmod 755 "$tmp/keepcmd"
 
-# 4. The binary checks the release against the keys compiled into it.
-KEEPCMD_LOG=/dev/null "$tmp/keepcmd" release verify --feed "$tmp/latest.json" --binary "$tmp/keepcmd" --platform "$plat" >"$tmp/verify" 2>&1 ||
+# 4. The binary checks the chain against the roots compiled into it.
+KEEPCMD_LOG=/dev/null "$tmp/keepcmd" release verify --delegations "$tmp/delegations.json" --feed "$tmp/latest.json" --binary "$tmp/keepcmd" --platform "$plat" >"$tmp/verify" 2>&1 ||
   fail "keepcmd $version refused the release: $(cat "$tmp/verify")"
 
 # Install: only $dir/keepcmd, replaced in one step.
