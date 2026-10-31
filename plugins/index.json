@@ -1,0 +1,129 @@
+{
+  "catalog_version": "2026.10.31",
+  "plugins": {
+    "verge_labs/github": {
+      "description": "Read and write GitHub issues, pull requests, files, and commits via the GitHub REST API. One connection = one primary owner/repo. For multiple repos create multiple connections backed by the same plugin type.",
+      "display_name": "GitHub",
+      "files": {
+        "manifest.yaml": "301597de73106fd91a9b62e4afb44d7596ede4cc1f25a1bd7073c863925181f8",
+        "skill.md": "a27f9a1650af688c03c6d99a8fecabfbd724a7b6b82abd00845fe7fc706eb99e"
+      },
+      "manifest_schema": 2,
+      "version": "0.1.4"
+    },
+    "verge_labs/google_calendar": {
+      "auth_scheme": "service_account",
+      "description": "Create and manage Google Calendar events via the Calendar REST API v3.",
+      "display_name": "Google Calendar (Service Account)",
+      "files": {
+        "manifest.yaml": "367c7ef85ea96d93c342f97e519a518f26d5fa68b00e162c2786a2c72467ad35",
+        "skill.md": "918fe3298d1eb88d828c86954b090d83c2b4cffd2c12d703dfbaebe3e61f94f3"
+      },
+      "manifest_schema": 2,
+      "version": "0.1.1"
+    },
+    "verge_labs/google_calendar_oauth": {
+      "auth_scheme": "oauth2_user",
+      "description": "Create and manage Google Calendar events via the Calendar REST API v3.",
+      "display_name": "Google Calendar",
+      "files": {
+        "manifest.yaml": "9c2da633e71c3a827adbd68faab2d08b361264910b68de5b1c8098888fb1e2df",
+        "skill.md": "56a367299aefeb30b052d8c8085c4d7de121f2fa445d83882af392475db2072a"
+      },
+      "manifest_schema": 2,
+      "version": "0.2.2"
+    },
+    "verge_labs/google_drive": {
+      "auth_scheme": "service_account",
+      "description": "Read and write files in Google Drive \u2014 including editing native Google Docs, Sheets, and Slides \u2014 via the Drive, Docs, Sheets, and Slides REST APIs.",
+      "display_name": "Google Drive (Service Account)",
+      "files": {
+        "manifest.yaml": "3f5a89c1b884221b533171e3d07e5cb2ce6a8ce80efeea7142d55196deb6c7d5",
+        "skill.md": "edfb3ee9e5db1ceb423766cef68b8ca6d80f0b90ae4a1e351fb10c434efafdd0"
+      },
+      "manifest_schema": 2,
+      "min_daemon_version": "1.1.0",
+      "version": "0.1.4"
+    },
+    "verge_labs/google_drive_oauth": {
+      "auth_scheme": "oauth2_user",
+      "description": "Read and write files in Google Drive \u2014 including editing native Google Docs, Sheets, and Slides \u2014 via the Drive, Docs, Sheets, and Slides REST APIs.",
+      "display_name": "Google Drive",
+      "files": {
+        "manifest.yaml": "f3034fe960e9c15b58f9b966fe5b45325afbb3dccf64ce9ca9c53b5ad5be4f53",
+        "skill.md": "11771e5e3e52664d03ffe67d2ee0f23fd32ff740f66946058d95455512ec3441"
+      },
+      "manifest_schema": 2,
+      "min_daemon_version": "1.1.0",
+      "version": "0.1.5"
+    },
+    "verge_labs/google_people": {
+      "auth_scheme": "service_account",
+      "description": "Look up people in a Google Workspace organization via the People API v1. Returns names, email addresses, phone numbers, job titles, and departments. Read-only.",
+      "display_name": "Google People (Service Account)",
+      "files": {
+        "manifest.yaml": "71916be04b74121de69df671237f70dd83f90685bdcf758973486be2af39b63f",
+        "skill.md": "0e63ed0a61124e50932cac7fc142998dcfb6808181e4ea8cc3c862c2d13f4c78"
+      },
+      "manifest_schema": 2,
+      "version": "0.1.1"
+    },
+    "verge_labs/google_people_oauth": {
+      "auth_scheme": "oauth2_user",
+      "description": "Look up the people in your Google Contacts \u2014 family, neighbours, the plumber, the kids' school. Returns names, email addresses, and phone numbers. Read-only.",
+      "display_name": "Google Contacts",
+      "files": {
+        "manifest.yaml": "fc1cc018d37ed6a5f96abdff0a9f2a317fdb2cc91ae65229244332fd24e34801",
+        "skill.md": "f96d901586934fc4e088805e03aadf035c3b351512db13beb55a2decccb8015b"
+      },
+      "manifest_schema": 2,
+      "version": "0.2.1"
+    },
+    "verge_labs/home_assistant": {
+      "description": "Control Home Assistant entities from agents. The daemon templates HTTP calls in-process \u2014 no subprocess plugin is spawned for this plugin. Configure with your HA instance URL and a long-lived access token.",
+      "display_name": "Home Assistant",
+      "files": {
+        "manifest.yaml": "decd2ea67746e033d1c1b14a6e89962f69e4a1fbcdbf119e3ae4ed5d154d491f",
+        "skill.md": "2907c2ba27820476cbe1ae93e1e2386e33a979d2738acd5e935d15d74d0657d4"
+      },
+      "manifest_schema": 2,
+      "version": "0.5.0"
+    },
+    "verge_labs/home_assistant_music_assistant": {
+      "description": "Play music around the house through Music Assistant on Home Assistant \u2014 ask for an artist, album or playlist by name, control transport and volume per room, group speakers, and move what's playing from one room to another.",
+      "display_name": "Music Assistant (Home Assistant)",
+      "files": {
+        "manifest.yaml": "96beba09d4b5cfb5546e515df033fce1072357b57485d25fcfce1d39a0ccd91c",
+        "skill.md": "4443a28cb409b947e783d786dc0c9aaf2513c420da268531aebb99f8676b09e7"
+      },
+      "manifest_schema": 2,
+      "min_daemon_version": "1.1.0",
+      "version": "0.1.0"
+    },
+    "verge_labs/sonos": {
+      "auth_scheme": "oauth2_user",
+      "description": "Control Sonos speakers from agents \u2014 play and pause, skip, set volume, start a favourite or playlist in a room, group and ungroup rooms, and play a short announcement clip.",
+      "display_name": "Sonos",
+      "files": {
+        "manifest.yaml": "056d2a684f4649ac55cb25e9230f5b39d869bf7ccf3d5cf259bd6478c39846e1",
+        "skill.md": "c77ff8cccb5ae1fad5e6bdcda9728fe9e61caf913a77238557b26b3004f3c94e"
+      },
+      "manifest_schema": 2,
+      "min_daemon_version": "2.4.0",
+      "version": "0.1.0"
+    },
+    "verge_labs/spotify": {
+      "auth_scheme": "oauth2_user",
+      "description": "Play music on Spotify from agents \u2014 search the catalogue and start something, control transport and volume, move playback between speakers, queue tracks, and save what's playing. REQUIRES SPOTIFY PREMIUM and a one-time setup step: you\u2026",
+      "display_name": "Spotify",
+      "files": {
+        "manifest.yaml": "49929264164521e2d5081f14dd90693482f9046c47ad27ce7baf2c2e3f2a699d",
+        "skill.md": "de016e0b0e0872d2c6f3c597492879aa374ec7c46146d84e6c258686b194c298"
+      },
+      "manifest_schema": 2,
+      "min_daemon_version": "2.4.0",
+      "version": "0.2.0"
+    }
+  },
+  "schema": 1
+}
