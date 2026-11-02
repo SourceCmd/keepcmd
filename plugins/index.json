@@ -1,6 +1,17 @@
 {
-  "catalog_version": "2026.10.31",
+  "catalog_version": "2026.11.02",
   "plugins": {
+    "verge_labs/club_automation": {
+      "auth_scheme": "none",
+      "description": "Find and book courts (tennis, squash, pickleball, padel, racquetball) at a club whose member portal runs on Club Automation. Signs in as you with your portal email and password; the keep holds the session, and your agent never sees either.\u2026",
+      "display_name": "Club Automation courts",
+      "files": {
+        "manifest.yaml": "f3eba445897ad49049a2dda45d14a09b46c43e5fd04031274b0507857acb0960",
+        "skill.md": "226b31bffdfa91528417502860f5d3eaf79eb2115ceb9d32b916bac5fe612200"
+      },
+      "manifest_schema": 3,
+      "version": "0.1.2"
+    },
     "verge_labs/github": {
       "description": "Read and write GitHub issues, pull requests, files, and commits via the GitHub REST API. One connection = one primary owner/repo. For multiple repos create multiple connections backed by the same plugin type.",
       "display_name": "GitHub",
