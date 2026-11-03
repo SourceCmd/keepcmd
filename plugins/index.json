@@ -1,16 +1,16 @@
 {
-  "catalog_version": "2026.11.02",
+  "catalog_version": "2026.11.03",
   "plugins": {
     "verge_labs/club_automation": {
       "auth_scheme": "none",
       "description": "Find and book courts (tennis, squash, pickleball, padel, racquetball) at a club whose member portal runs on Club Automation. Signs in as you with your portal email and password; the keep holds the session, and your agent never sees either.\u2026",
       "display_name": "Club Automation courts",
       "files": {
-        "manifest.yaml": "f3eba445897ad49049a2dda45d14a09b46c43e5fd04031274b0507857acb0960",
-        "skill.md": "226b31bffdfa91528417502860f5d3eaf79eb2115ceb9d32b916bac5fe612200"
+        "manifest.yaml": "848e8fc0ba784022c716f79371d86a8613ca36e5caa6fb68ca9738a08bc1f2b5",
+        "skill.md": "cb8974b9c26679b9237357d2d52215b1c4fea69ed817b14f184706e534214d4f"
       },
       "manifest_schema": 3,
-      "version": "0.1.2"
+      "version": "0.1.3"
     },
     "verge_labs/github": {
       "description": "Read and write GitHub issues, pull requests, files, and commits via the GitHub REST API. One connection = one primary owner/repo. For multiple repos create multiple connections backed by the same plugin type.",

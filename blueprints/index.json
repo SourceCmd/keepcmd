@@ -113,7 +113,7 @@
       ],
       "display_name": "Rally",
       "files": {
-        "blueprint.yaml": "acf92e2d582982774e9ee89f5857cea032b10222b4704f6c92170439f2077d2b"
+        "blueprint.yaml": "4e45cddd111eb06d151fdf4970bfe0ad2cec1df2d019863d166995d894d9716d"
       },
       "format": 2,
       "kind": "agent",
@@ -126,7 +126,7 @@
         "squash",
         "pickleball"
       ],
-      "version": "1.0.0"
+      "version": "1.0.1"
     },
     "sourcecmd/rare-earths-guy": {
       "apps": [
@@ -194,6 +194,6 @@
       "version": "1.0.1"
     }
   },
-  "catalog_version": "2026.11.02",
+  "catalog_version": "2026.11.03",
   "schema": 1
 }
